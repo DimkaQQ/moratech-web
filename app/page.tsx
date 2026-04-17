@@ -1,65 +1,131 @@
-import Image from "next/image";
+'use client';
+
+import { m } from 'framer-motion';
+import { BentoCard } from '@/components/ui/BentoCard';
+import { ScrollVelocityText } from '@/components/ui/ScrollVelocityText';
+import { Marquee } from '@/components/ui/Marquee';
+
+// RULE: rerender-variants-object + anim-hardware-acceleration
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+      type: 'spring' as const,
+      stiffness: 250,
+      damping: 20,
+    },
+  },
+} as const;
+
+const itemVariants = {
+  hidden: { y: 40, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { type: 'spring' as const, stiffness: 300, damping: 25 },
+  },
+} as const;
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="flex flex-col gap-8 pb-24">
+      {/* Секция 1: Кинетический заголовок */}
+      <section className="min-h-[55vh] flex flex-col justify-center relative overflow-hidden px-4 md:px-8 max-w-[1600px] mx-auto w-full">
+        <ScrollVelocityText text="MORA.TECH" />
+        <m.p 
+          variants={itemVariants} 
+          initial="hidden"
+          animate="visible"
+          className="text-neutral-400 text-xl md:text-2xl max-w-xl mt-6"
+        >
+          Enterprise-grade solutions. <br />
+          <span className="text-white font-medium">Built for speed.</span>
+        </m.p>
+      </section>
+
+      {/* Секция 2: Bento Grid */}
+      <m.section 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[280px] px-4 md:px-8 max-w-[1600px] mx-auto w-full"
+      >
+        {/* Большая карточка - Кейс */}
+        <BentoCard 
+          layoutId="case-fintech"
+          className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-indigo-950/60 to-purple-950/40"
+          title="InvoiceFlow"
+          subtitle="FinTech · AI Automation"
+          tag="Case Study"
+          icon="📉"
+          description="Processing time: 4 days → 12 minutes. Team scaled from 8 to 2 roles."
+          metrics={[{ label: 'Speed', value: '98%' }, { label: 'Errors', value: '<0.3%' }, { label: 'Saved', value: '€2.4M' }]}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {/* Карточка - Услуги */}
+        <BentoCard 
+          layoutId="service-saas"
+          className="hover:border-teal-500/40 transition-colors"
+          title="SaaS"
+          subtitle="Scalable Platforms"
+          tag="Service"
+          icon="☁️"
+          description="Multi-tenant, real-time analytics, automated billing."
+        />
+        
+        {/* Карточка - Статистика */}
+        <BentoCard 
+          layoutId="stat-roi"
+          className="hover:border-teal-500/40 transition-colors"
+          title="340%"
+          subtitle="Average ROI Year 1"
+          tag="Result"
+          icon="📈"
+        />
+
+        {/* Карточка - Мобайл */}
+        <BentoCard 
+          layoutId="service-mobile"
+          className="hover:border-teal-500/40 transition-colors"
+          title="Mobile"
+          subtitle="iOS & Android"
+          tag="Service"
+          icon="📱"
+          description="Native performance, offline-first architecture."
+        />
+
+        {/* Карточка - Кейс 2 */}
+        <BentoCard 
+          layoutId="case-retail"
+          className="md:col-span-2 bg-gradient-to-br from-orange-950/60 to-red-950/40"
+          title="RetailSync"
+          subtitle="E-Commerce · Omnichannel"
+          tag="Case Study"
+          icon="🛍️"
+          description="Overselling eliminated. Unified CRM & inventory sync."
+          metrics={[{ label: 'Conv.', value: '+47%' }, { label: 'Rev.', value: '€8.1M' }]}
+        />
+
+        {/* Карточка - Контакты */}
+        <BentoCard 
+          layoutId="contact"
+          className="bg-teal-950/30 border-teal-500/30 hover:border-teal-400/60 transition-colors flex items-center justify-center"
+          title="Let's Talk"
+          subtitle="hello@moratech.eu"
+          tag="Contact"
+          icon="📬"
+        />
+      </m.section>
+
+      {/* Секция 3: Бегущая строка (Keyframes) */}
+      <section className="py-10 border-y border-white/5 overflow-hidden">
+        <Marquee 
+          items={['React', 'Next.js 15', 'Framer Motion', 'Node.js', 'PostgreSQL', 'AWS', 'AI/ML', 'GDPR', 'Zero Trust']}
+        />
+      </section>
     </div>
   );
 }
