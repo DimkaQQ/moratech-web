@@ -1,53 +1,54 @@
-// app/legal/page.tsx (аналогично для /privacy и /terms)
 import { Reveal } from '@/components/ui/Reveal';
 
-export default function LegalPage() {
+export default function PrivacyPage() {
   return (
     <section className="pt-35 pb-25">
       <div className="max-w-[800px] mx-auto px-8">
         <Reveal>
           <div className="text-center mb-12">
-            <div className="label">Legal Information</div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Company Registration & Details</h1>
-            <p className="text-neutral-400">Official information for ADM. Operating under the laws of the Republic of Kazakhstan.</p>
+            <div className="label">Privacy Policy</div>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Your Data Is Safe With Us</h1>
+            <p className="text-neutral-400">Compliant with RK Law №94-V and GDPR (EU) 2016/679. Last updated: April 2026.</p>
           </div>
         </Reveal>
 
         <Reveal>
-          <div className="bg-elevated border border-white/7 rounded-2xl p-8 leading-relaxed space-y-6">
-            <h2 className="text-xl font-bold">Business Registration</h2>
-            <ul className="space-y-2 text-sm text-neutral-300">
-              <li><span className="text-white font-medium">Brand:</span> MoraTech</li>
-              <li><span className="text-white font-medium">Legal Entity:</span> ADM (Individual Entrepreneur)</li>
-              <li><span className="text-white font-medium">Owner:</span> Dinmukhammed Altynbek</li>
-              <li><span className="text-white font-medium">BIN:</span> 040721551748</li>
-              <li><span className="text-white font-medium">Country:</span> Republic of Kazakhstan</li>
-            </ul>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/4">
-              <div className="bg-neutral-900/50 p-4 rounded-lg">
-                <div className="text-xs text-neutral-500 uppercase tracking-wider mb-1">Contact</div>
-                <div className="text-sm">d.altynbek@moratech.eu</div>
-              </div>
-              <div className="bg-neutral-900/50 p-4 rounded-lg">
-                <div className="text-xs text-neutral-500 uppercase tracking-wider mb-1">Governing Law</div>
-                <div className="text-sm">Civil Code & Tax Code of Kazakhstan</div>
-              </div>
-            </div>
-            <h3 className="text-lg font-bold pt-2">Tax & Invoicing</h3>
+          <div className="bg-neutral-900/80 border border-white/7 rounded-2xl p-8 leading-relaxed space-y-6">
+            <h2 className="text-xl font-bold">1. Data Controller</h2>
+            <p><strong>MoraTech</strong><br />IP Dinmukhammed Altynbek<br />BIN: 040721551748<br />Email: privacy@moratech.eu | d.altynbek@moratech.eu<br />Address: Republic of Kazakhstan</p>
+            
+            <h3 className="text-lg font-bold pt-2">2. Data We Collect</h3>
             <ul className="list-disc pl-5 text-sm text-neutral-400 space-y-1.5">
-              <li>IT services exported to foreign clients: 0% VAT (per Tax Code of RK)</li>
-              <li>EU B2B clients: Reverse Charge Mechanism applies</li>
-              <li>Invoices in EUR, USD, or KZT. Payment via SWIFT, SEPA, Wise, PayPal.</li>
+              <li><strong>Contact Information:</strong> Name, business email, phone, company details</li>
+              <li><strong>Project Information:</strong> Technical requirements, scope, budget data</li>
+              <li><strong>Communication Data:</strong> Emails, meeting records, correspondence</li>
+              <li><strong>Technical Data:</strong> IP address, device info, website analytics cookies</li>
             </ul>
-            <h3 className="text-lg font-bold pt-2">EU Compliance</h3>
+
+            <h3 className="text-lg font-bold pt-2">3. Legal Basis for Processing</h3>
             <ul className="list-disc pl-5 text-sm text-neutral-400 space-y-1.5">
-              <li>GDPR-compliant data processing for all EU clients</li>
-              <li>Client data stored in EU cloud regions (AWS Frankfurt, GCP Belgium)</li>
-              <li>Standard Contractual Clauses (SCCs) for international data transfers</li>
-              <li>eIDAS-compatible e-signatures supported</li>
+              <li><strong>Consent:</strong> Contact forms, newsletter subscriptions (Art. 6(1)(a) GDPR / Art. 9 RK Law)</li>
+              <li><strong>Contract Performance:</strong> Service delivery, invoicing, project management</li>
+              <li><strong>Legitimate Interests:</strong> Website security, analytics, business development</li>
             </ul>
+
+            <h3 className="text-lg font-bold pt-2">4. How We Use Your Data</h3>
+            <p>We process data exclusively to:</p>
+            <ul className="list-disc pl-5 text-sm text-neutral-400 space-y-1.5">
+              <li>Provide software development & consulting services</li>
+              <li>Send project documentation, invoices, and technical updates</li>
+              <li>Comply with RK tax, accounting, and data protection legislation</li>
+              <li>Improve website functionality and user experience</li>
+            </ul>
+
+            <h3 className="text-lg font-bold pt-2">5. Data Storage & International Transfers</h3>
+            <p>All client project data is stored in EU-based data centers (AWS Frankfurt, GCP Belgium). Data is processed under Standard Contractual Clauses (SCCs) approved by the EU Commission. We never transfer personal data to jurisdictions without adequate data protection standards.</p>
+
+            <h3 className="text-lg font-bold pt-2">6. Your Rights</h3>
+            <p>Under GDPR and RK legislation, you may request access, correction, deletion, restriction of processing, or data portability. Contact: <a href="mailto:privacy@moratech.eu" className="text-teal-400 hover:underline">privacy@moratech.eu</a>. We respond within 15 business days.</p>
+
             <p className="text-xs text-neutral-500 pt-4 border-t border-white/4">
-              For official documents or verification: <a href="mailto:d.altynbek@moratech.eu" className="text-teal-400 hover:underline">d.altynbek@moratech.eu</a>
+              Questions about your data? Contact our Data Protection Lead at <a href="mailto:privacy@moratech.eu" className="text-teal-400 hover:underline">privacy@moratech.eu</a>
             </p>
           </div>
         </Reveal>

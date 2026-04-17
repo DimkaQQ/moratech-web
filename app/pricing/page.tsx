@@ -2,7 +2,19 @@
 
 import { m } from 'framer-motion';
 import { Reveal } from '@/components/ui/Reveal';
+import { useI18n } from '@/hooks/useI18n';
 import Link from 'next/link';
+
+// ✅ RULE: rerender-variants-object
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2, type: 'spring' as const, stiffness: 250, damping: 20 } },
+} as const;
+
+const itemVariants = {
+  hidden: { y: 40, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring' as const, stiffness: 300, damping: 25 } },
+} as const;
 
 const plans = [
   { name: 'MVP Sprint', price: '€15K', term: '/ 4 weeks', desc: 'Validate your idea fast', features: ['Dedicated development resource', 'Working prototype in 4 weeks', 'UI/UX design included', 'Cloud deployment', '2 weeks post-launch support'], cta: 'Start MVP' },
@@ -11,60 +23,54 @@ const plans = [
 ];
 
 export default function PricingPage() {
+  const { t } = useI18n();
+
   return (
     <>
       <section className="pt-35 pb-15 text-center">
         <div className="max-w-[1400px] mx-auto px-8">
-          <div className="label"><span>🏷️</span> Pricing & ROI</div>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-5">Transparent Pricing. Guaranteed Results.</h1>
-          <p className="text-lg text-neutral-400 max-w-[650px] mx-auto">No hidden costs. No surprise invoices. Choose the model that fits your stage — and scale when ready.</p>
+          <Reveal>
+            <div className="label"><span>🏷️</span> {t.pricing.title}</div>
+            <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-5">{t.pricing.heading}</h1>
+            <p className="text-lg text-neutral-400 max-w-[650px] mx-auto">{t.pricing.subtitle}</p>
+          </Reveal>
         </div>
       </section>
 
       <section className="pb-20">
         <div className="max-w-[1100px] mx-auto px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <m.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {plans.map((p, i) => (
               <Reveal key={p.name} delay={i * 0.1}>
-                <m.div
-                  className={`relative bg-elevated border rounded-2xl p-9 flex flex-col ${p.featured ? 'border-teal-500 shadow-[0_0_0_1px_rgba(20,184,166,0.3),0_16px_48px_-8px_rgba(0,0,0,0.5)]' : 'border-white/7 hover:translate-y-[-4px] transition-transform'}`}
-                >
-                  {p.featured && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-700 to-teal-500 text-white text-[0.7rem] font-bold px-4 py-1 rounded-full uppercase tracking-wider">
-                      Most Popular
-                    </div>
-                  )}
+                <m.div className={`relative bg-neutral-900/80 border rounded-2xl p-9 flex flex-col ${p.featured ? 'border-teal-500 shadow-[0_0_0_1px_rgba(20,184,166,0.3),0_16px_48px_-8px_rgba(0,0,0,0.5)]' : 'border-white/7 hover:translate-y-[-4px] transition-transform'}`}>
+                  {p.featured && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-700 to-teal-500 text-white text-[0.7rem] font-bold px-4 py-1 rounded-full uppercase tracking-wider">{t.pricing.popular}</div>}
                   <h3 className="text-xl font-bold mb-1">{p.name}</h3>
                   <div className="text-4xl font-black tracking-tight my-4">{p.price}<span className="text-base font-normal text-neutral-500"> {p.term}</span></div>
                   <p className="text-sm text-neutral-500 mb-6">{p.desc}</p>
                   <ul className="space-y-2.5 mb-8 flex-1">
                     {p.features.map(f => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-neutral-400">
-                        <span className="text-teal-400 mt-0.5">✓</span> {f}
-                      </li>
+                      <li key={f} className="flex items-start gap-2 text-sm text-neutral-400"><span className="text-teal-400 mt-0.5">✓</span> {f}</li>
                     ))}
                   </ul>
-                  <Link href="/contact" className={`block text-center py-3 rounded-xl font-semibold transition-all ${p.featured ? 'bg-gradient-to-r from-teal-700 to-teal-500 text-white hover:translate-y-[-2px] hover:shadow-lg' : 'border border-white/10 text-white hover:bg-white/5 hover:border-teal-500/50'}`}>
-                    {p.cta}
-                  </Link>
+                  <Link href="/contact" className={`block text-center py-3 rounded-xl font-semibold transition-all ${p.featured ? 'bg-gradient-to-r from-teal-700 to-teal-500 text-white hover:translate-y-[-2px] hover:shadow-lg' : 'border border-white/10 text-white hover:bg-white/5 hover:border-teal-500/50'}`}>{p.cta}</Link>
                 </m.div>
               </Reveal>
             ))}
-          </div>
+          </m.div>
 
           <Reveal delay={0.3}>
             <div className="text-center mt-8 text-neutral-400 text-sm max-w-[600px] mx-auto">
-              <p className="mb-2"><strong className="text-white">Why these prices?</strong> You're paying for results and direct access — not agency overhead. No middlemen. No markup. Just focused work with modern tooling.</p>
+              <p className="mb-2"><strong className="text-white">{t.pricing.why_title}</strong> {t.pricing.why_desc}</p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="py-20 bg-surface">
+      <section className="py-20 bg-neutral-900/50">
         <div className="max-w-[1400px] mx-auto px-8 text-center">
-          <Reveal><h2 className="text-3xl font-bold mb-8">MoraTech vs Typical Vendors</h2></Reveal>
+          <Reveal><h2 className="text-3xl font-bold mb-8">{t.pricing.comparison_title}</h2></Reveal>
           <div className="max-w-[900px] mx-auto">
-            <div className="w-full bg-elevated border border-white/7 rounded-2xl overflow-hidden text-sm">
+            <div className="w-full bg-neutral-900/80 border border-white/7 rounded-2xl overflow-hidden text-sm">
               {[
                 ['Transparency', 'Black box', 'Live dashboard, weekly demos'],
                 ['Pricing', 'Scope creep', 'Fixed-price contract'],
@@ -87,13 +93,11 @@ export default function PricingPage() {
       <section className="py-20">
         <div className="max-w-[800px] mx-auto px-8">
           <Reveal>
-            <m.div className="bg-elevated border border-white/7 rounded-2xl p-12 text-center relative overflow-hidden">
+            <m.div className="bg-neutral-900/80 border border-white/7 rounded-2xl p-12 text-center relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-teal-500/5 to-transparent" />
               <div className="relative z-10 text-4xl mb-4">🛡️</div>
-              <h3 className="text-xl font-bold mb-3 relative z-10">Deliver On Time or 20% Refund</h3>
-              <p className="text-neutral-400 relative z-10 max-w-[500px] mx-auto">
-                We stake our reputation on deadlines. If we miss the agreed timeline, you receive a 20% refund. Fixed pricing, no hidden costs. Full code ownership from day one.
-              </p>
+              <h3 className="text-xl font-bold mb-3 relative z-10">{t.pricing.guarantee_title}</h3>
+              <p className="text-neutral-400 relative z-10 max-w-[500px] mx-auto">{t.pricing.guarantee_desc}</p>
             </m.div>
           </Reveal>
         </div>

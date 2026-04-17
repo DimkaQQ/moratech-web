@@ -1,4 +1,3 @@
-// app/legal/page.tsx (аналогично для /privacy и /terms)
 import { Reveal } from '@/components/ui/Reveal';
 
 export default function LegalPage() {
@@ -14,7 +13,7 @@ export default function LegalPage() {
         </Reveal>
 
         <Reveal>
-          <div className="bg-elevated border border-white/7 rounded-2xl p-8 leading-relaxed space-y-6">
+          <div className="bg-neutral-900/80 border border-white/7 rounded-2xl p-8 leading-relaxed space-y-6">
             <h2 className="text-xl font-bold">Business Registration</h2>
             <ul className="space-y-2 text-sm text-neutral-300">
               <li><span className="text-white font-medium">Brand:</span> MoraTech</li>
