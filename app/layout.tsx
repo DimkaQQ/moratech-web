@@ -1,49 +1,36 @@
-'use client';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { I18nProvider } from "@/hooks/useI18n";
+import { Footer } from "@/components/ui/Footer";
 
-import { Inter } from 'next/font/google';
-import { LazyMotion, AnimatePresence } from 'framer-motion';
-import { usePathname } from 'next/navigation';
-import { Header } from '@/components/ui/Header';
-import { CursorFollower } from '@/components/ui/CursorFollower';
-import './globals.css';
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
-// ✅ RULE: bundle-dynamic-features - динамический импорт после гидратации
-const loadFeatures = () => 
-  import('framer-motion').then((mod) => mod.domAnimation);
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "MoraTech - European Software Partner",
+  description: "Scalable digital products. GDPR-compliant. Fixed-price contracts.",
+};
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans bg-neutral-950 text-white overflow-x-hidden`}>
-        {/* ✅ RULE: bundle-lazy-motion + bundle-strict-mode + bundle-dom-animation */}
-        <LazyMotion features={loadFeatures} strict>
-          {/* ✅ RULE: exit-mode-wait - последовательные переходы между страницами */}
-          <AnimatePresence mode="wait">
-            <div 
-              key={pathname} 
-              className="relative min-h-screen"
-              suppressHydrationWarning
-            >
-              <Header />
-              {/* ✅ Курсор только на десктопе (см. компонент CursorFollower) */}
-              <CursorFollower />
-              <main className="pt-24 px-4 md:px-8 max-w-[1600px] mx-auto">
-                {children}
-              </main>
-            </div>
-          </AnimatePresence>
-        </LazyMotion>
+    <html lang="en" className="dark">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}>
+        <I18nProvider>
+          <main>{children}</main>
+          <Footer />
+        </I18nProvider>
       </body>
     </html>
   );
